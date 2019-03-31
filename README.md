@@ -18,39 +18,13 @@ Runs the python server in the development mode on port 2000.
 
 Before you run this command: 
 Open Command Prompt. Activate python enviroment within Scripts folder, running 'activate' command.
-From root folder run: 
-    set FLASK_APP=src/pythonServer/server.py 
-    set FLASK_DEBUG=1
+(MLAV) ...fraas-app\servers\pythonServer>set FLASK_APP=server.py
+
+(MLAV) ...fraas-app\servers\pythonServer>set FLASK_DEBUG=1
 (on mac use 'export' instead of 'set')
 
 ## Learn More
 
 Getting started with Flask  [Python Flask Tutorial: Full-Featured Web App Part 1 - Getting Started](https://www.youtube.com/watch?v=MwZwr5Tvyxo)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[Received data in flask](https://stackoverflow.com/questions/10434599/how-to-get-data-received-in-flask-request)

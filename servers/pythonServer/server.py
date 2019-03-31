@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import request
-import sys
 app = Flask(__name__)
 
 @app.route('/')
@@ -10,5 +9,6 @@ def hello_world():
 @app.route('/image', methods=['POST'])
 def parse_request():
     if request.method == 'POST':
-        request_data = request.get_json()
-        print(request_data['name'])
+        request_data = request.json
+        print(request_data)
+        return 'got reponse'
