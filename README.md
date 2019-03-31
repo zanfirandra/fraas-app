@@ -25,7 +25,7 @@ Open Command Prompt. Activate python enviroment within Scripts folder, running '
 
 - (py-env)...fraas-app\servers\pythonServer>set FLASK_DEBUG=1
   (on mac use 'export' instead of 'set')
-- ...fraas-app\servers\pythonServer>flask run --port=2000
+- (py-env)...fraas-app\servers\pythonServer>flask run --port=2000
 
 ## Learn More
 
