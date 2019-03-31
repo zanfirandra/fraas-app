@@ -14,17 +14,18 @@ You will also see any lint errors in the console.
 
 ### `flask run --port=2000`
 
-Runs the python server in the development mode on port 2000. 
+Runs the python server in the development mode on port 2000.
 
-Before you run this command: 
+Before you run this command:
 Open Command Prompt. Activate python enviroment within Scripts folder, running 'activate' command.
-(MLAV) ...fraas-app\servers\pythonServer>set FLASK_APP=server.py
 
-(MLAV) ...fraas-app\servers\pythonServer>set FLASK_DEBUG=1
-(on mac use 'export' instead of 'set')
+- (MLAV) ...fraas-app\servers\pythonServer>set FLASK_APP=server.py
+
+- (MLAV) ...fraas-app\servers\pythonServer>set FLASK_DEBUG=1
+  (on mac use 'export' instead of 'set')
 
 ## Learn More
 
-Getting started with Flask  [Python Flask Tutorial: Full-Featured Web App Part 1 - Getting Started](https://www.youtube.com/watch?v=MwZwr5Tvyxo)
+Getting started with Flask [Python Flask Tutorial: Full-Featured Web App Part 1 - Getting Started](https://www.youtube.com/watch?v=MwZwr5Tvyxo)
 
 [Received data in flask](https://stackoverflow.com/questions/10434599/how-to-get-data-received-in-flask-request)
