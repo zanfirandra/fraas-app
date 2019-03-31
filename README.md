@@ -19,10 +19,13 @@ Runs the python server in the development mode on port 2000.
 Before you run this command:
 Open Command Prompt. Activate python enviroment within Scripts folder, running 'activate' command.
 
-- (MLAV) ...fraas-app\servers\pythonServer>set FLASK_APP=server.py
+- ...fraas-app\py-env\Scripts>activate
 
-- (MLAV) ...fraas-app\servers\pythonServer>set FLASK_DEBUG=1
+- (py-env)...fraas-app\servers\pythonServer>set FLASK_APP=server.py
+
+- (py-env)...fraas-app\servers\pythonServer>set FLASK_DEBUG=1
   (on mac use 'export' instead of 'set')
+- ...fraas-app\servers\pythonServer>flask run --port=2000
 
 ## Learn More
 
