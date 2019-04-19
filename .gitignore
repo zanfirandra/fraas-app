@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+/py-env/Lib/site-packages
+/py-env/Scripts
 
 # testing
 /coverage
