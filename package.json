@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mongodb": "^3.2.3",
     "mongoose": "^5.5.2",
+    "prop-types": "^15.7.2",
     "react": "^16.4.0",
     "react-axios": "^2.0.3",
     "react-dom": "^16.4.0",
     "react-redux": "^6.0.1",
+    "react-router-dom": "^5.0.0",
     "react-webcam": "^1.1.0",
     "redux": "^4.0.1"
   },

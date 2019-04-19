@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Webcam from "react-webcam";
-import axios from "axios";
-import "./App.css";
+
+import "./CameraComponent.css";
 
 /* class App extends Component {
   state = {
@@ -76,8 +76,7 @@ export default App;
 class CameraApp extends Component {
   state = {
     imageData: null,
-    image_name: "",
-    saveImage: false
+    savedImage: false
   };
   //setRef and capture methods are used to call activate the webcam and capture the image.
   setRef = webcam => {
@@ -99,19 +98,12 @@ class CameraApp extends Component {
   };
   //onClickSave to change the saveImage state, which will allow me to turn off the webcam after I take a picture with a conditional statement.
   onClickSave = async e => {
-    let imageObj = {
-      image_name: this.state.image_name,
-      image_data: this.state.imageData
-    };
-    let axiosConfig = {
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*"
-      }
-    };
-    var response = await axios.post("/", imageObj, axiosConfig);
-    console.log(response);
+    await this.setState({
+      savedImage: true
+    });
+    this.props.handleImageData(this.state);
   };
+
   //handleChange callback allows the user to input a filename if they wish to
   handleChange = e => {
     e.persist();
