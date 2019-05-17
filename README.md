@@ -21,19 +21,11 @@ Open Command Prompt. Activate python enviroment within Scripts folder, running '
 
 - ...fraas-app\py-env\Scripts>activate
 
-- (py-env)...fraas-app\servers\pythonServer>set FLASK_APP=server.py
+- (py-env)...fraas-app\servers\pythonServer>set FLASK_APP=service_recognition.py
 
 - (py-env)...fraas-app\servers\pythonServer>set FLASK_DEBUG=1
   (on mac use 'export' instead of 'set')
 - (py-env)...fraas-app\servers\pythonServer>flask run --port=2000
-
-### MongoDB `mongod`
-
-Run this command in command prompt
-This will setup MongoDB on machine
-After that try to connect with MongoDB Compass
-
-Created database is FraasDB with collection Users
 
 ## Learn More
 
