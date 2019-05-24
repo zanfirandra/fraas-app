@@ -10,11 +10,15 @@ app.get("/api/hello", (req, res) => {
   res.send({ express: "Hello From Express" });
 });
 
-app.post("/", (req, res, next) => {
+app.get("/third-party", (request, response, next) => {
+  const bearerToken = request.get("Authorization");
+
+  const auth_token = { auth_token: bearerToken };
   axios
-    .post(" http://127.0.0.1:2000/image", req.body)
-    .then(function(response) {
-      res.send(response.data);
+    .post("http://127.0.0.1:2000/third-party", auth_token)
+    .then(function(resp) {
+      console.log(resp);
+      response.send(resp.data);
     })
     .catch(function(error) {
       console.log("error");

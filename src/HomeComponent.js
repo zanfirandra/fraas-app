@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
@@ -7,8 +6,9 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-
 import CameraApp from "./CameraComponent";
+import { authService } from "./auth";
+import Modal from "react-bootstrap/Modal";
 
 const styles = theme => ({
   root: {
@@ -27,30 +27,22 @@ function getSteps() {
   return ["Enter your name", "Take a selfie", "Submit data"];
 }
 
-/* function getStepContent(step, saveImage) {
-  switch (step) {
-    case 0:
-      return nameInput;
-    case 1:
-      return cammeraStep(saveImage);
-    case 2:
-      return "This is the bit I really care about!";
-    default:
-      return "Unknown step";
-  }
-} */
-
 class HorizontalLinearStepper extends React.Component {
   constructor() {
     super();
     this.handleImageData = this.handleImageData.bind(this);
     this.handleSubmitInfo = this.handleSubmitInfo.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   state = {
     activeStep: 0,
     imageData: null,
-    inputValue: ""
+    inputValue: "",
+    redirect: false,
+    showModal: false,
+    modalTitle: "",
+    modalBody: ""
   };
 
   nameInput = () => {
@@ -81,7 +73,6 @@ class HorizontalLinearStepper extends React.Component {
   };
 
   handleImageData = __state => {
-    console.log(__state);
     this.setState({
       imageData: __state.imageData,
       savedImage: __state.savedImage
@@ -102,18 +93,39 @@ class HorizontalLinearStepper extends React.Component {
   };
 
   async handleSubmitInfo() {
-    let imageObj = {
+    let userInfo = {
       image_data: this.state.imageData,
       user_name: this.state.inputValue
     };
-    let axiosConfig = {
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*"
+    let isGranted;
+    const response = await authService.sendDataforAuth(userInfo);
+
+    if (response === true) {
+      isGranted = await authService.accessPrivateResources();
+      console.log("handleAccesResources: isGranted ", isGranted);
+      if (isGranted.success) {
+        this.setState({
+          showModal: true,
+          modalTitle: "Success",
+          modalBody:
+            " Welcome, " +
+            userInfo.user_name +
+            " . You have been recognized. Now you can access your private resources!"
+        });
+      } else {
+        this.setState({
+          showModal: true,
+          modalTitle: "Error",
+          modalBody: isGranted.error
+        });
       }
-    };
-    var response = await axios.post("/", imageObj, axiosConfig);
-    console.log(response);
+    } else {
+      this.setState({
+        showModal: true,
+        modalTitle: "Error",
+        modalBody: response
+      });
+    }
   }
 
   handleBack = () => {
@@ -126,6 +138,10 @@ class HorizontalLinearStepper extends React.Component {
     this.setState({
       activeStep: 0
     });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false });
   };
 
   render() {
@@ -183,6 +199,13 @@ class HorizontalLinearStepper extends React.Component {
             </div>
           )}
         </div>
+
+        <Modal show={this.state.showModal} onHide={this.handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.state.modalTitle}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.modalBody}</Modal.Body>
+        </Modal>
       </div>
     );
   }
