@@ -8,6 +8,21 @@ axios.interceptors.request.use(function(config) {
   return config;
 });
 
+axios.interceptors.response.use(
+  function(response) {
+    debugger;
+    console.log("axios response intercept", response);
+    return response;
+  },
+  function(error) {
+    if (error.message) {
+      alert("Servers are down. " + error.message + ". Please try again");
+      console.log("axios response intercept", error);
+      return Promise.reject(error);
+    }
+  }
+);
+
 export const authService = {
   sendDataforAuth: async userInfo => {
     let axiosConfig = {
@@ -36,6 +51,30 @@ export const authService = {
     const response = await axios.get("/third-party");
     return response.data;
   },
+  performLivenessDetection: async imageData => {
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*"
+      }
+    };
+    let imageToDetect = {
+      image: imageData
+    };
+    let response = await axios.post(
+      "http://127.0.0.1:2000/liveness",
+      imageToDetect,
+      axiosConfig
+    );
+    console.log(response.data);
+    if (typeof response.data === "boolean") {
+      if (response.data)
+        return "Passed liveness detection! You can now go to the next step.";
+      else
+        return "Failed liveness detection! Please do not try to impersonate someone!";
+    } else return response.data.error;
+  },
+
   setToken: idToken => {
     // Saves user token to localStorage
     localStorage.setItem("id_token", idToken);
