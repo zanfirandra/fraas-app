@@ -39,7 +39,6 @@ class HorizontalLinearStepper extends React.Component {
     activeStep: 0,
     imageData: null,
     inputValue: "",
-    redirect: false,
     showModal: false,
     modalTitle: "",
     modalBody: ""
@@ -72,10 +71,18 @@ class HorizontalLinearStepper extends React.Component {
     return <CameraApp handleImageData={this.handleImageData} />;
   };
 
-  handleImageData = __state => {
-    this.setState({
+  handleImageData = async __state => {
+    await this.setState({
       imageData: __state.imageData,
       savedImage: __state.savedImage
+    });
+    const response = await authService.performLivenessDetection(
+      this.state.imageData
+    );
+    console.log(response);
+    this.setState({
+      showModal: true,
+      modalBody: response
     });
   };
 
