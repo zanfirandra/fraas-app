@@ -39,11 +39,9 @@ class HorizontalLinearStepper extends React.Component {
     activeStep: 0,
     imageData: null,
     inputValue: "",
-    redirect: false,
     showModal: false,
     modalTitle: "",
-    modalBody: "",
-    liveness_result: false
+    modalBody: ""
   };
 
   nameInput = () => {
