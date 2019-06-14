@@ -18,7 +18,6 @@ app = Flask(__name__)
 CORS(app)
 
 enrolled_people = {}
-
 # Load face detector and trained models
 face_detector = dlib.get_frontal_face_detector()
 shape_predictor = dlib.shape_predictor("models/shape_predictor_5_face_landmarks.dat")
@@ -38,9 +37,11 @@ def detect_spoofing():
                 liveness_result = detect_spoofed_image()
                 print(liveness_result)
                 if(liveness_result == 'fake'):
-                        return 'false'
+                        repsonse = {'error': "Failed liveness detection! Please do not try to impersonate someone!"}
+                        return Response(json.dumps(repsonse), mimetype="application/json")
                 else:
-                        return 'true'
+                        repsonse = {'success': "Passed liveness detection! You can now go to the next step."}
+                        return Response(json.dumps(repsonse), mimetype="application/json")
         else:
                 return Response(json.dumps(getting_bounding_box), mimetype="application/json")
 
@@ -106,7 +107,6 @@ def decode_image(encoded_image, image_name):
         image_data = encoded_image[starter+1:]
         image_data = bytes(image_data, encoding="ascii")
         decode_img = Image.open(BytesIO(base64.b64decode(image_data)))
-
         faces_folder_path = './faces/'
         image_path = faces_folder_path + image_name + '.jpg'
         decode_img.save(image_path)

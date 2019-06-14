@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Webcam from "react-webcam";
+import { Button } from "react-bootstrap";
 
-import "./CameraComponent.css";
+import "./app.css";
 
 class CameraApp extends Component {
   state = {
@@ -61,7 +62,9 @@ class CameraApp extends Component {
           videoConstraints={videoConstraints}
         />
         <div className="button-container">
-          <button onClick={this.capture}>Capture photo</button>
+          <Button id="capture" variant="light" onClick={this.capture}>
+            Capture photo
+          </Button>
         </div>
         {this.state.imageData ? (
           <div>
@@ -69,10 +72,14 @@ class CameraApp extends Component {
               <img src={this.state.imageData} alt="" />
             </p>
             <span>
-              <button onClick={this.onClickRetake}>Retake?</button>
+              <Button id="retake" variant="light" onClick={this.onClickRetake}>
+                Retake
+              </Button>
             </span>
             <span>
-              <button onClick={this.onClickSave}>Save?</button>
+              <Button id="save" variant="light" onClick={this.onClickSave}>
+                Save
+              </Button>
             </span>
           </div>
         ) : null}

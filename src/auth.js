@@ -67,12 +67,8 @@ export const authService = {
       axiosConfig
     );
     console.log(response.data);
-    if (typeof response.data === "boolean") {
-      if (response.data)
-        return "Passed liveness detection! You can now go to the next step.";
-      else
-        return "Failed liveness detection! Please do not try to impersonate someone!";
-    } else return response.data.error;
+
+    return response.data;
   },
 
   setToken: idToken => {
