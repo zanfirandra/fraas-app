@@ -13,7 +13,7 @@ config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 
 print("[INFO] loading trained model liveness detector...")
-model_path = './models/liveness.model'
+model_path = './models/liveness_8model.h5'
 model = load_model(model_path)
 # Tensor (“something”) is not an element of this graph.’ Error in Keras using Tensorflow backend on Flask Web Server https://kobkrit.com/tensor-something-is-not-an-element-of-this-graph-error-in-keras-on-flask-web-server-4173a8fe15e1
 graph = tf.get_default_graph()

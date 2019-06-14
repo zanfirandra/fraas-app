@@ -4,11 +4,19 @@ import { withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  InputGroup,
+  FormControl
+} from "react-bootstrap";
 import Typography from "@material-ui/core/Typography";
 import CameraApp from "./CameraComponent";
 import { authService } from "./auth";
 import Modal from "react-bootstrap/Modal";
+import "./app.css";
 
 const styles = theme => ({
   root: {
@@ -33,19 +41,30 @@ class HorizontalLinearStepper extends React.Component {
     this.handleImageData = this.handleImageData.bind(this);
     this.handleSubmitInfo = this.handleSubmitInfo.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.state = {
+      activeStep: 0,
+      imageData: null,
+      inputValue: "",
+      showModal: false,
+      modalTitle: "",
+      modalBody: "",
+      spoofed: true
+    };
   }
 
-  state = {
-    activeStep: 0,
-    imageData: null,
-    inputValue: "",
-    showModal: false,
-    modalTitle: "",
-    modalBody: ""
-  };
-
   nameInput = () => {
-    return <input placeholder="John Doe..." onChange={this.updateInputValue} />;
+    return (
+      <div>
+        <label htmlFor="basic-url">Enter your name</label>
+        <InputGroup
+          className="mb-3"
+          placeholder="John Doe..."
+          onChange={this.updateInputValue}
+        >
+          <FormControl placeholder="Username" />
+        </InputGroup>
+      </div>
+    );
   };
 
   getStepContent(step) {
@@ -82,7 +101,8 @@ class HorizontalLinearStepper extends React.Component {
     console.log(response);
     this.setState({
       showModal: true,
-      modalBody: response
+      modalBody: response.success || response.error,
+      spoofed: response.error ? true : false
     });
   };
 
@@ -143,7 +163,8 @@ class HorizontalLinearStepper extends React.Component {
 
   handleReset = () => {
     this.setState({
-      activeStep: 0
+      activeStep: 0,
+      spoofed: true
     });
   };
 
@@ -155,57 +176,74 @@ class HorizontalLinearStepper extends React.Component {
     const { classes } = this.props;
     const steps = getSteps();
     const { activeStep } = this.state;
+    const { spoofed } = this.state;
 
     return (
-      <div className={classes.root}>
-        <Stepper activeStep={activeStep}>
-          {steps.map((label, index) => {
-            const props = {};
-            const labelProps = {};
+      <Container className={classes.root}>
+        <Row>
+          <Col>
+            <Stepper activeStep={activeStep}>
+              {steps.map((label, index) => {
+                const props = {};
+                const labelProps = {};
 
-            return (
-              <Step key={label} {...props}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
-        <div>
-          {activeStep === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Button onClick={this.handleReset} className={classes.button}>
-                Reset
-              </Button>
-            </div>
-          ) : (
-            <div>
-              <Typography className={classes.instructions}>
-                {this.getStepContent(activeStep)}
-              </Typography>
+                return (
+                  <Step key={label} {...props}>
+                    <StepLabel {...labelProps}>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
+          </Col>
+        </Row>
+        <Row>
+          <Col />
+          <Col>
+            {activeStep === steps.length ? (
               <div>
+                <Typography className={classes.instructions}>
+                  All steps completed - you&apos;re finished
+                </Typography>
                 <Button
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
+                  variant="light"
+                  onClick={this.handleReset}
                   className={classes.button}
                 >
-                  Back
-                </Button>
-
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleNext}
-                  className={classes.button}
-                >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                  Reset
                 </Button>
               </div>
-            </div>
-          )}
-        </div>
+            ) : (
+              <div>
+                <Typography className={classes.instructions}>
+                  {this.getStepContent(activeStep)}
+                </Typography>
+                <div>
+                  <Button
+                    variant="light"
+                    disabled={activeStep === 0}
+                    onClick={this.handleBack}
+                    className={classes.button}
+                    id="left"
+                  >
+                    Back
+                  </Button>
+
+                  <Button
+                    variant="light"
+                    color="primary"
+                    onClick={this.handleNext}
+                    className={classes.button}
+                    id="right"
+                    disabled={spoofed && activeStep !== 0}
+                  >
+                    {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </Col>
+          <Col />
+        </Row>
 
         <Modal show={this.state.showModal} onHide={this.handleCloseModal}>
           <Modal.Header closeButton>
@@ -213,7 +251,7 @@ class HorizontalLinearStepper extends React.Component {
           </Modal.Header>
           <Modal.Body>{this.state.modalBody}</Modal.Body>
         </Modal>
-      </div>
+      </Container>
     );
   }
 }
