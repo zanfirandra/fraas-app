@@ -13,7 +13,7 @@ config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 
 print("[INFO] loading trained model liveness detector...")
-model_path = './models/liveness_8model.h5'
+model_path = './models/liveness_model.h5'
 model = load_model(model_path)
 # Tensor (“something”) is not an element of this graph.’ Error in Keras using Tensorflow backend on Flask Web Server https://kobkrit.com/tensor-something-is-not-an-element-of-this-graph-error-in-keras-on-flask-web-server-4173a8fe15e1
 graph = tf.get_default_graph()
@@ -21,8 +21,6 @@ graph = tf.get_default_graph()
 #load face detector
 hog_detector = dlib.get_frontal_face_detector()
 
-label_encoder = './models/le.pickle'
-labels = pickle.loads(open(label_encoder, "rb").read())
 # read image saved to disk because there are slightly differences between values from loaded image and directly decoded one
 imagePath = './faces/liveness.jpg'
 def detect_spoofed_image():
@@ -38,6 +36,9 @@ def detect_spoofed_image():
                 global graph
                 with graph.as_default():
                         preds = model.predict(face)
-                j = np.argmax(preds)
-                label = labels.classes_[j]
-                return label
+                predicted_class_indices = np.argmax(preds, axis=1)
+                label = predicted_class_indices[0]
+                if(predicted_class_indices[0] == 1):
+                        return 'real'
+                else:
+                        return 'fake'
