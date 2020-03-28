@@ -26,9 +26,3 @@ Open Command Prompt. Activate python enviroment within Scripts folder, running '
 - (py-env)...fraas-app\servers\pythonServer>set FLASK_DEBUG=1
   (on mac use 'export' instead of 'set')
 - (py-env)...fraas-app\servers\pythonServer>flask run --port=2000
-
-## Learn More
-
-Getting started with Flask [Python Flask Tutorial: Full-Featured Web App Part 1 - Getting Started](https://www.youtube.com/watch?v=MwZwr5Tvyxo)
-
-[Received data in flask](https://stackoverflow.com/questions/10434599/how-to-get-data-received-in-flask-request)

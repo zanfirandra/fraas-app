@@ -35,8 +35,8 @@
 
 #left {
   float: left;
-  margin-right: 57%;
-  margin-left: 4%;
+  margin-right: 45%;
+  margin-left: 10%;
   color: #3f51b5;
   border-color: #3f51b5;
 }
@@ -69,4 +69,8 @@
   border-color: #3f51b5;
   margin-left: 31%;
   margin-bottom: 5%;
+}
+
+.message-icon {
+  margin: 6px;
 }

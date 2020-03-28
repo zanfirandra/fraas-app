@@ -10,7 +10,6 @@ axios.interceptors.request.use(function(config) {
 
 axios.interceptors.response.use(
   function(response) {
-    debugger;
     console.log("axios response intercept", response);
     return response;
   },
