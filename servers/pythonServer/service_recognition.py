@@ -36,7 +36,7 @@ def detect_spoofing():
         if(getting_bounding_box.get('bounding_boxes')):
                 liveness_result = detect_spoofed_image()
                 print(liveness_result)
-                if(liveness_result == 'fake'):
+                if(liveness_result == 'spoofed'):
                         repsonse = {'error': "Failed liveness detection! Please do not try to impersonate someone!"}
                         return Response(json.dumps(repsonse), mimetype="application/json")
                 else:

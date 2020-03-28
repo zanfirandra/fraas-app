@@ -16,6 +16,8 @@ import Typography from "@material-ui/core/Typography";
 import CameraApp from "./CameraComponent";
 import { authService } from "./auth";
 import Modal from "react-bootstrap/Modal";
+import { IconContext } from "react-icons";
+import { GoAlert, GoVerified } from "react-icons/go";
 import "./app.css";
 
 const styles = theme => ({
@@ -32,7 +34,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-  return ["Enter your name", "Take a selfie", "Submit data"];
+  return ["Enter your name", "Take a selfie", "Access private resources"];
 }
 
 class HorizontalLinearStepper extends React.Component {
@@ -74,7 +76,7 @@ class HorizontalLinearStepper extends React.Component {
       case 1:
         return this.cammeraStep();
       case 2:
-        return "This is the bit I really care about!";
+        return "Great! Now submit for face recognition...";
       default:
         return "Unknown step";
     }
@@ -101,6 +103,7 @@ class HorizontalLinearStepper extends React.Component {
     console.log(response);
     this.setState({
       showModal: true,
+      modalTitle: response.error ? "Error" : "Success",
       modalBody: response.success || response.error,
       spoofed: response.error ? true : false
     });
@@ -202,7 +205,7 @@ class HorizontalLinearStepper extends React.Component {
             {activeStep === steps.length ? (
               <div>
                 <Typography className={classes.instructions}>
-                  All steps completed - you&apos;re finished
+                  All steps completed!
                 </Typography>
                 <Button
                   variant="light"
@@ -235,8 +238,9 @@ class HorizontalLinearStepper extends React.Component {
                     className={classes.button}
                     id="right"
                     disabled={spoofed && activeStep !== 0}
+                    type="submit"
                   >
-                    {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                    {activeStep === steps.length - 1 ? "Submit" : "Next"}
                   </Button>
                 </div>
               </div>
@@ -248,6 +252,23 @@ class HorizontalLinearStepper extends React.Component {
         <Modal show={this.state.showModal} onHide={this.handleCloseModal}>
           <Modal.Header closeButton>
             <Modal.Title>{this.state.modalTitle}</Modal.Title>
+            {this.state.modalTitle === "Error" ? (
+              <IconContext.Provider
+                value={{ color: "red", className: "global-class-name" }}
+              >
+                <div class="message-icon">
+                  <GoAlert />
+                </div>
+              </IconContext.Provider>
+            ) : (
+              <IconContext.Provider
+                value={{ color: "green", className: "global-class-name" }}
+              >
+                <div class="message-icon">
+                  <GoVerified />
+                </div>
+              </IconContext.Provider>
+            )}
           </Modal.Header>
           <Modal.Body>{this.state.modalBody}</Modal.Body>
         </Modal>
